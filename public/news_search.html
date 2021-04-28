@@ -1,0 +1,88 @@
+
+
+<!DOCTYPE html>
+<html>
+<header>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> \
+    <script src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+
+    
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+</header>
+
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+
+                <div class="page-header">
+                    <h1>
+                        欢迎查看中国新闻网查询词的热度分析！
+                    </h1>
+                </div>
+
+
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="title" style="width: 400px;height:300px;"></div>
+                <script type="text/javascript">
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart1 = echarts.init(document.getElementById('title'));
+
+                    // 异步加载数据
+                    $.get('/news_title_info').done(function (result) {
+                        myChart1.setOption({
+                            title: {
+                                text: '标题查询词的热度分析'
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: result[0]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '频数',
+                                type: 'bar',
+                                data: result[1]
+                            }]
+                    })
+                    })
+                </script>
+
+
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="content" style="width: 400px;height:300px;"></div>
+                <script type="text/javascript">
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart2 = echarts.init(document.getElementById('content'));
+
+                    // 异步加载数据
+                    $.get('/news_content_info').done(function (result) {
+                        myChart2.setOption({
+                            title: {
+                                text: '内容查询词的热度分析'
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: result[0]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '频数',
+                                type: 'bar',
+                                data: result[1]
+                            }]
+                    })
+                    })
+                </script>
+
+
+ 
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
